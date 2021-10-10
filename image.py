@@ -43,3 +43,30 @@ print(img.dtype) # unit8: unsigned integer value of 8, a maximum of 2 to 8 value
 print(img[10,5])
 print(img[:,:,0]) # all the pixels in the first channel
 print(img.size)  # total number of pixels
+
+
+# 02_03 data types and structure
+black = np.zeros([150,200,1],'uint8') #u -> unsigned uint8-> 0 - 255
+cv2.imshow("Blace",black)
+print(black[0,0,:])
+
+ones = np.ones([150,200,3],'uint8') # one is still a small number in 0 - 255
+# ones *= 150 # grey color
+cv2.imshow("Ones",ones)
+print(ones[0,0,:])
+
+
+white = np.ones([150,200,3],'uint16') # 16 bit length image
+white *= (2**16-1)
+cv2.imshow("White",white)
+print(white[0,0,:])
+
+
+color = ones.copy() # a deep copy means completely copy all its memory space,
+# meaning the two are no longer connected to each other at all.
+color[:,:] = (255,0,0)
+cv2.imshow("color",color)
+print(color[0,0,:])
+
+cv2.waitKey(0)
+cv2.destroyAllWindows()

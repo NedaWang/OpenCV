@@ -103,3 +103,26 @@ cv2.moveWindow("Split HSV",0,height*2)
 
 cv2.waitKey(0)
 cv2.destroyAllWindows()
+
+
+
+
+# 02_05 pixel manipulation and filtering
+color = cv2.imread("butterfly.jpg",1)
+
+gray = cv2.cvtColor(color, cv2.COLOR_RGB2GRAY)
+cv2.imwrite("gray.jpg",gray)
+
+# looks verbose, but actually more efficient and faster than cv2.split operator
+
+b = color[:,:,0]
+g = color[:,:,1]
+r = color[:,:,2]
+
+rgba = cv2.merge((b,g,r,g)) # low green value would appear transparent
+
+# JPEG images do not support image transparency
+cv2.imwrite("rgba.png",rgba)
+
+# python openCV's native image viewer does not support transparency
+# so we can use OSX native image viewer

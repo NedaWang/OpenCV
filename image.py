@@ -70,3 +70,36 @@ print(color[0,0,:])
 
 cv2.waitKey(0)
 cv2.destroyAllWindows()
+
+
+
+# 02_04 image types and color channels
+color = cv2.imread("butterfly.jpg",1) # load it with full color, and 1 is th default value
+cv2.imshow("Image",color)
+cv2.moveWindow("Image",0,0) # window setting, showing it as top left hand corner
+print(color.shape)
+height, width, channels = color.shape
+
+b,g,r = cv2.split(color) # split channels of the color image into each of its components as an individual matrix
+rgb_split = np.empty([height, width*3,3],'uint8') # create an uninitialized array matrix
+rgb_split[:,0:width] = cv2.merge([b,b,b])
+rgb_split[:,width:width*2] = cv2.merge([g,g,g])
+rgb_split[:,width*2:width*3] = cv2.merge([r,r,r])
+
+cv2.imshow("Channels",rgb_split)
+cv2.moveWindow("Channels",0,height)
+
+# another color space: Hue Saturation and Value space
+'''
+Hue: the type of color in a 360 degree format
+Saturation: how saturated an idividual color is
+Value channel: how luminous the channel is
+'''
+hsv = cv2.cvtColor(color, cv2.COLOR_BGR2HSV)
+h,s,v = cv2.split(hsv)
+hsv_split = np.concatenate((h,s,v),axis=1) # axis=1: make these three images appear side by side
+cv2.imshow("Split HSV",hsv_split)
+cv2.moveWindow("Split HSV",0,height*2)
+
+cv2.waitKey(0)
+cv2.destroyAllWindows()

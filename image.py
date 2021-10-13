@@ -164,3 +164,41 @@ cv2.imshow("Erode",erode)
 
 cv2.waitKey(0)
 cv2.destroyAllWindows()
+
+
+
+
+# 02_07 scale and rotate
+
+img = cv2.imread("players.jpg",1)
+cv2.imshow("Original",img)
+
+# Scale
+
+#(0.0): not set absolute size in pixel, and use relative factors
+img_half = cv2.resize(img, (0,0), fx=0.1, fy=0.1)
+cv2.imshow("Half",img_half)
+# explicitly scale the image of those dimensions
+img_stretch = cv2.resize(img, (600,600))
+cv2.imshow("Stretch",img_stretch)
+# set interpolation mode for the scalling process
+# this one is more pixelated because no imtrpolation was down between pixels during the scaling process
+# it used the closest pixel compared to the source image
+img_stretch_near = cv2.resize(img, (600,600), interpolation=cv2.INTER_NEAREST)
+cv2.imshow("Stretch near",img_stretch_near)
+
+
+# Rotation: applying a matrix transformation
+
+# capitalized letters are customary for matrix definitions
+h, w, c = img.shape # first return value is height, second return value is width
+# first variable is the origin that we want to rotate (X-axis, Y-axis)
+# second variable is the rotate degree, positive value is anti-clockwise
+# third variable is scale size
+M = cv2.getRotationMatrix2D((w/2,h/2), -90, 1)
+# output img = cv2.warpAffine(input img, affine transform, desired size of the output img)
+rotated = cv2.warpAffine(img, M, (img.shape[1], img.shape[0]))
+cv2.imshow("Rotated",rotated)
+
+cv2.waitKey(0)
+cv2.destroyAllWindows()

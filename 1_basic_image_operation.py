@@ -2,7 +2,6 @@ import numpy as np
 import cv2
 
 # 02_01
-
 #load in image
 img = cv2.imread("opencv-logo.png")
 
@@ -45,6 +44,8 @@ print(img[:,:,0]) # all the pixels in the first channel
 print(img.size)  # total number of pixels
 
 
+
+
 # 02_03 data types and structure
 black = np.zeros([150,200,1],'uint8') #u -> unsigned uint8-> 0 - 255
 cv2.imshow("Blace",black)
@@ -55,12 +56,10 @@ ones = np.ones([150,200,3],'uint8') # one is still a small number in 0 - 255
 cv2.imshow("Ones",ones)
 print(ones[0,0,:])
 
-
 white = np.ones([150,200,3],'uint16') # 16 bit length image
 white *= (2**16-1)
 cv2.imshow("White",white)
 print(white[0,0,:])
-
 
 color = ones.copy() # a deep copy means completely copy all its memory space,
 # meaning the two are no longer connected to each other at all.
@@ -70,6 +69,7 @@ print(color[0,0,:])
 
 cv2.waitKey(0)
 cv2.destroyAllWindows()
+
 
 
 
@@ -118,14 +118,13 @@ cv2.imwrite("gray.jpg",gray)
 b = color[:,:,0]
 g = color[:,:,1]
 r = color[:,:,2]
-
 rgba = cv2.merge((b,g,r,g)) # low green value would appear transparent
 
 # JPEG images do not support image transparency
 cv2.imwrite("rgba.png",rgba)
-
 # python openCV's native image viewer does not support transparency
 # so we can use OSX native image viewer
+
 
 
 
@@ -153,7 +152,6 @@ cv2.imshow("Original",image)
 # Third parameter: Standard deviation value of kernal along horizontal direction.
 blur = cv2.GaussianBlur(image,(55,5),0)
 cv2.imshow("Blur",blur)
-
 
 kernel = np.ones((5,5),'uint8')
 dilate = cv2.dilate(image, kernel, iterations=1)
@@ -187,7 +185,6 @@ cv2.imshow("Stretch",img_stretch)
 img_stretch_near = cv2.resize(img, (600,600), interpolation=cv2.INTER_NEAREST)
 cv2.imshow("Stretch near",img_stretch_near)
 
-
 # Rotation: applying a matrix transformation
 
 # capitalized letters are customary for matrix definitions
@@ -207,10 +204,8 @@ cv2.destroyAllWindows()
 
 
 # 02_08 use video inputs and capture images
-
 # request from operating system to use the camera
 cap = cv2.VideoCapture(0) # 0: continuous
-
 # a loop of video feed
 while(True):   # forever loop
 
@@ -224,6 +219,7 @@ while(True):   # forever loop
 
 cap.release()
 cv2.destroyAllWindows()
+
 
 
 

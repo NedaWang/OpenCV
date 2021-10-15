@@ -202,3 +202,25 @@ cv2.imshow("Rotated",rotated)
 
 cv2.waitKey(0)
 cv2.destroyAllWindows()
+
+
+
+
+# 02_08 use video inputs and capture images
+
+# request from operating system to use the camera
+cap = cv2.VideoCapture(0) # 0: continuous
+
+# a loop of video feed
+while(True):   # forever loop
+
+    ret,frame = cap.read()  # read a new frame from the video capture
+    frame = cv2.resize(frame, (0,0), fx=0.5, fy = 0.5)
+    cv2.imshow("Frame", frame)
+    # ch is the actual key that we have captured
+    ch = cv2.waitKey(1)  # run every one millisecond before the next loop
+    if ch & 0xFF == ord('q'):   #  convert Q character into the key that would match the ch value
+        break
+
+cap.release()
+cv2.destroyAllWindows()

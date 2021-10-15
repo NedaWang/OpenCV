@@ -224,3 +224,43 @@ while(True):   # forever loop
 
 cap.release()
 cv2.destroyAllWindows()
+
+
+
+# 02_09 create custom interface
+
+# request from operating system to use the camera
+cap = cv2.VideoCapture(0) # 0: continuous
+
+# define circle attributes
+color = (0,255,0)  # green
+line_width = 3 # if -1: the circle would be filled instead of having a lin thickness
+radius = 100
+point = (0, 0)
+
+# relocate point by clicking mouse
+def click(event, x, y, flags, param):
+    global point, pressed
+    if event == cv2.EVENT_LBUTTONDOWN:
+        print("Pressed",x,y)
+        point = (x,y)
+
+cv2.namedWindow("Frame")
+cv2.setMouseCallback("Frame", click)
+
+# a loop of video feed
+while(True):   # forever loop
+
+    ret,frame = cap.read()  # read a new frame from the video capture
+    frame = cv2.resize(frame, (0,0), fx=0.5, fy = 0.5)
+
+    cv2.circle(frame, point, radius, color, line_width)
+
+    cv2.imshow("Frame", frame)
+    # ch is the actual key that we have captured
+    ch = cv2.waitKey(1)  # run every one millisecond before the next loop
+    if ch & 0xFF == ord('q'):   #  convert Q character into the key that would match the ch value
+        break
+
+cap.release()
+cv2.destroyAllWindows()

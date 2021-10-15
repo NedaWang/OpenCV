@@ -1,3 +1,4 @@
+# 03_02 simple thresholding
 import numpy as np
 import cv2
 
@@ -29,6 +30,35 @@ cv2.imshow("Slow Binary", binary)  # this method is slower
 # openCV build-in segmentation method
 ret, new_thresh = cv2.threshold(bw, thresh, 255, cv2.THRESH_BINARY)
 cv2.imshow("CV Threshold", new_thresh)
+
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+
+
+
+# 03_03 adaptive thresholding
+'''
+Simple thresholding has limitation, such as when there's uneven lighting in an image.
+This is where adaptive thresholding comes to the rescue, which increase the versatility of image thresholding operations.
+Instead of taking a simple global value as a threshold comparison, adaptive thresholding will look in its local neighborhood of the image to determine whether a relative threshold is met.
+'''
+
+img = cv2.imread("sudoku.png", 0)
+cv2.imshow("Original", img)
+
+ret, thresh_basic = cv2.threshold(img, 70, 255, cv2.THRESH_BINARY)
+cv2.imshow("Basic Binary", thresh_basic)
+# 255: maximum pixel value
+# 115: how far or what th localization of where the adaptive threshoding will act over
+# 1: a mean subtraction from the end result
+thres_adapt = cv2.adaptiveThreshold(img, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 115, 1)
+cv2.imshow("Adaptive threshold", thres_adapt)
+
+kernel = np.ones((3,3),'uint8')
+dilate = cv2.dilate(thres_adapt, kernel, iterations=1)
+cv2.imshow("dilate", dilate)
+
 
 cv2.waitKey(0)
 cv2.destroyAllWindows()
